@@ -8,16 +8,16 @@ const UserModal = ({ user, close }) => {
   useEffect(() => {
     const getUserRepos = async () => {
       const resp = await axios.get(
-        `https://api.github.com/users/${user?.login}/repos?per_page=10&page=${currantPage}&sort=repositories`
+        `https://api.github.com/users/${user.login}/repos?per_page=10&page=${currantPage}&sort=repositories`
       );
-      const data = await resp.data;
+      const data = await resp?.data;
       setRepos(data);
     };
     getUserRepos();
   }, [user?.id, currantPage]);
 
   return (
-    <div className="modal_box" onClick={() => close()}>
+    <div className="modal_box" onClick={() => close()} >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="user_info">
           <img src={user?.avatar_url} alt="avatar" />

@@ -6,9 +6,9 @@ import UserModal from "./UserModal";
 jest.mock('axios')
 
 describe("Test user data", () => {
-  let responce;
+  let response;
   beforeEach(() => {
-    responce = {
+    response = {
       data: [
         {
           "id": 666379404,
@@ -121,12 +121,18 @@ describe("Test user data", () => {
       ]
     }
   })
-  test('render learn react link', async () => {
-    axios.get.mockReturnValue(responce)
-    render(<UserModal/>)
-    const repos = await screen.findAllByTestId('repo')
-    expect(repos.length).toBe(1)
-    expect(axios.get).toBeCalledTimes(1)
-    screen.debug()
-  })
+  test('renders repositories when there are some', async () => {
+    axios.get.mockResolvedValue(response);
+    const user = {
+      login: "testuser",
+      avatar_url: "https://example.com/avatar.png",
+      html_url: "https://github.com/testuser",
+    };
+
+    render(<UserModal user={user} close={() => {}} />);
+    
+    const repos = await screen.findAllByTestId('repo');
+    expect(repos.length).toBe(1);
+    expect(axios.get).toBeCalledTimes(1);
+  });
 })

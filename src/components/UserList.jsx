@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import useDebounce from "../hooks/useDebounce";
 import { createPages } from "../utils/pagination";
 import UserModal from "./UserModal";
+import UserItem from "./UserItem";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
-  const [visibleModal, setVisibleModal] = useState(false);
   const [currantPage, setCurrantPage] = useState(1);
   const [totalCount, setTotalCount] = useState(null);
   const pageCount = Math.ceil(totalCount / 10);
@@ -39,22 +39,7 @@ const UserList = () => {
       <div className="users">
         {users.length !== 0 ? (
           users.map((user, index) => (
-              <div
-                key={user?.id}
-                className="user"
-                data-testid="user"
-                onClick={() => setVisibleModal(true)}
-              >
-                <div className="number">
-                  <p>{index + 1}</p>
-                  <img className="avatar" src={user?.avatar_url} alt="avatar" />
-                </div>
-                <h4>{user?.login}</h4>
-                <p>Type: {user?.type}</p>
-              {visibleModal && (
-                <UserModal user={user} key={user.id} close={() => setVisibleModal(false)} />
-              )}
-              </div>
+            <UserItem user={user} index={index} key={user.id} />
           ))
         ) : (
           <h1>User not found</h1>

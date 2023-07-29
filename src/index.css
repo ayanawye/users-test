@@ -54,6 +54,7 @@ button{
   width: 100%;
   padding: 30px 0;
   display: flex;
+  z-index: 111;
   justify-content: center;
   align-items: center;
   background: rgba(85, 83, 83, 0.7);
